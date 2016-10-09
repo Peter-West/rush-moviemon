@@ -9,12 +9,17 @@ def title_screen(request):
     return render(request, "game/title_screen.html", context)
 
 def worldmap(request):
-    #data = Data_mgmt().load_default_settings()
-    data = {"position": {"x": 9, "y": 9}}
+    data_mgmt = Data_mgmt()
+    data = data_mgmt.dump()
+    board_size = { "width": range(settings.BOARD_SIZE["width"]), "height": range(settings.BOARD_SIZE["height"]) }
+    if request.method == 'POST' and request._get_post()['clicked']:
+        val = request._get_post()['val']
+        if val == "down":
+            data['position']['x'] = data['position']['x'] + 1
+        Data_mgmt.load()
     def attack_link(part):
         return ""
     position = data["position"]
-    board_size = { "width": range(settings.BOARD_SIZE["width"]), "height": range(settings.BOARD_SIZE["height"]) }
     if position["x"] != 0:
         left = {"action": "worldmap", "value": "left"}
     else:
