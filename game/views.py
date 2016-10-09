@@ -15,8 +15,8 @@ def worldmap(request):
     if request.method == 'POST' and request._get_post()['clicked']:
         val = request._get_post()['val']
         if val == "down":
-            data['position']['x'] = data['position']['x'] + 1
-        Data_mgmt.load()
+            data['position']['y'] = data['position']['y'] + 1
+        data_mgmt.load()
     def attack_link(part):
         return ""
     position = data["position"]
