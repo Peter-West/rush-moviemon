@@ -5,10 +5,7 @@ from game.data_mgmt import Data_mgmt
 def title_screen(request):
     context = {}
     dat = Data_mgmt()
-    # dat.load_default_settings()
-    # print (dat.get_random_movie()['Title'])
-    # dump = dat.dump()
-    # print (dump['Movies'])
+    dat.load_default_settings()
     return render(request, "game/title_screen.html", context)
 
 def worldmap(request):
@@ -23,7 +20,16 @@ def battle(request):
     return render(request, "game/battle.html", context)
 
 def battle_moviemon(request, moviemon_id):
-    context = {"moviemon_id": moviemon_id}
+    dat = Data_mgmt()
+    dump = dat.dump()
+    mov = {}
+    balls = dump["nbr_balls"]
+    sgt = dat.get_strength()
+    for item in dump['Movies']:
+        if item['imdbID'] == moviemon_id:
+            mov = item
+    taux = 50 - (int(mov['imdbRating'][0:1]) * 10) + (sgt * 5)
+    context = {"moviemon": mov, "nbr_balls" : balls, "strength" : sgt, "taux" : taux}
     return render(request, "game/battle_moviemon.html", context)
 
 def moviedex(request):
