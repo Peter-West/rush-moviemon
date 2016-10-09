@@ -21,14 +21,13 @@ class Data_mgmt:
 		self.picklize()
 		return self
 
-	def load(self, pos, balls, dex):
-		movielist = self.dump['Movies']
-		moviedex.append(dex)
-		position = pos
-		nbr_balls = balls
+	def load(self):
+		movielist = self.dump()['Movies']
+		moviedex = self.dump()['Moviedex']
+		position = self.dump()['position']
+		nbr_balls = self.dump()['nbr_balls']
 		self.dic = {"position": position, "nbr_balls": nbr_balls, "Moviedex": moviedex, "Movies": movielist}
 		self.picklize()
-		return self
 
 	def dump(self):
 		obj = self.unpicklize()

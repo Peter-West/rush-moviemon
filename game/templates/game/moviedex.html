@@ -2,7 +2,7 @@
 {% block content %}
 {% for movie in movies%}
 	<a href="moviedex/{{movie.imdbID}}">
-		<img src="{{movie.Poster}}" {% if count == forloop.counter %} class="moviedex"{% endif %}>
+		<img src="{{movie.Poster}}"class="moviedex">
 	</a>
 	{% endfor %}
 {% endblock %}

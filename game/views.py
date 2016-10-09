@@ -9,12 +9,17 @@ def title_screen(request):
     return render(request, "game/title_screen.html", context)
 
 def worldmap(request):
-    #data = Data_mgmt().load_default_settings()
-    data = {"position": {"x": 9, "y": 9}}
+    data_mgmt = Data_mgmt()
+    data = data_mgmt.dump()
+    board_size = { "width": range(settings.BOARD_SIZE["width"]), "height": range(settings.BOARD_SIZE["height"]) }
+    if request.method == 'POST' and request._get_post()['clicked']:
+        val = request._get_post()['val']
+        if val == "down":
+            data['position']['y'] = data['position']['y'] + 1
+        data_mgmt.load()
     def attack_link(part):
         return ""
     position = data["position"]
-    board_size = { "width": range(settings.BOARD_SIZE["width"]), "height": range(settings.BOARD_SIZE["height"]) }
     if position["x"] != 0:
         left = {"action": "worldmap", "value": "left"}
     else:
@@ -57,29 +62,33 @@ def battle_moviemon(request, moviemon_id):
         if item['imdbID'] == moviemon_id:
             mov = item
     taux = 50 - (int(mov['imdbRating'][0:1]) * 10) + (sgt * 5)
-    context = {"moviemon": mov, "nbr_balls" : balls, "strength" : sgt, "taux" : taux}
+    # taux = 1 <= taux <= 90
+    taux = 60
+    controls = {
+            "left": {"action": "", "value": ""},
+            "up": {"action": "", "value": ""},
+            "right": {"action": "", "value": ""},
+            "down": {"action": "", "value": ""},
+            "a": {"action": ("action"), "value": ("moviemon_id")},
+            "start": {"action": "options", "value": "options"},
+            "select": {"action": "moviedex", "value": "moviedex"},
+            }
+    context = {"moviemon": mov, "nbr_balls" : balls, "strength" : sgt, "taux" : taux, "controls": controls}
     return render(request, "game/battle_moviemon.html", context)
 
 def moviedex(request):
-    count = 1
-    def increment(count):
-        count += 1
-        return count
-    def decrement(count):
-        count -= 1
-        return count
     datamg = Data_mgmt()
     # datamg.load_default_settings()
     data = datamg.dump()
     movies = data['Movies']
     print (type(movies))
     controls = {
-            "left": {"action": "moviedex", "value": decrement(count)},
-            "right": {"action": "moviedex", "value": increment(count)},
+            "left": {"action": "moviedex", "value": "prev"},
+            "right": {"action": "moviedex", "value": "next"},
             "a": {"action": "moviedex_moviemon", "value": "detail"},
             "select": {"action": "worldmap", "value": "back"},
             }
-    context = {"movies":movies, "controls":controls, "count":count}
+    context = {"movies":movies, "controls":controls}
     return render(request, "game/moviedex.html", context)
 
 def moviedex_moviemon(request, moviemon_id):
@@ -92,7 +101,7 @@ def moviedex_moviemon(request, moviemon_id):
     controls = {
             "b": {"action": "moviedex", "value": "back"},
             }
-    context = {"movie": movie}
+    context = {"movie": movie, "controls":controls}
     return render(request, "game/moviedex_moviemon.html", context)
 
 def options(request):
