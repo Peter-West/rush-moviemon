@@ -14,3 +14,15 @@ td {
   vertical-align: bottom;
   padding: 1.5em;
 }
+
+#controls {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+#controls li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 1em;
+}
