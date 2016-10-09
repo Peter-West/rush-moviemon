@@ -22,10 +22,10 @@ class Data_mgmt:
 		return self
 
 	def load(self):
-		movielist = self.dump['Movies']
-		moviedex = self.dump['Moviedex']
-		position = self.dump['position']
-		nbr_balls = self.dump['nbr_balls']
+		movielist = self.dump()['Movies']
+		moviedex = self.dump()['Moviedex']
+		position = self.dump()['position']
+		nbr_balls = self.dump()['nbr_balls']
 		self.dic = {"position": position, "nbr_balls": nbr_balls, "Moviedex": moviedex, "Movies": movielist}
 		self.picklize()
 
