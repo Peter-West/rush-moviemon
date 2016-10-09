@@ -10,23 +10,23 @@ class Data_mgmt:
 		return len(self.dump()['Moviedex'])
 
 	def load_default_settings(self):
-		moviedex = []
-		movielist = []
-		position = settings.PLAYER_START
-		nbr_balls = 3
+		self.moviedex = []
+		self.movielist = []
+		self.position = settings.PLAYER_START
+		self.nbr_balls = 3
 		for name in settings.MOVIES:
 			response = requests.get("http://www.omdbapi.com/?t=" + name + "&plot=short&r=json")
-			movielist.append(json.loads(response.text))
-		self.dic = {"position": position, "nbr_balls": nbr_balls, "Moviedex": moviedex, "Movies": movielist}
+			self.movielist.append(json.loads(response.text))
+		self.dic = {"position": self.position, "nbr_balls": self.nbr_balls, "Moviedex": self.moviedex, "Movies": self.movielist}
 		self.picklize()
 		return self
 
-	def load(self):
-		movielist = self.dump()['Movies']
-		moviedex = self.dump()['Moviedex']
-		position = self.dump()['position']
-		nbr_balls = self.dump()['nbr_balls']
-		self.dic = {"position": position, "nbr_balls": nbr_balls, "Moviedex": moviedex, "Movies": movielist}
+	def load(self, pos, balls, dex):
+		self.movielist = self.dump()['Movies']
+		self.moviedex = dex
+		self.position = pos
+		self.nbr_balls = balls
+		self.dic = {"position": self.position, "nbr_balls": self.nbr_balls, "Moviedex": self.moviedex, "Movies": self.movielist}
 		self.picklize()
 
 	def dump(self):
