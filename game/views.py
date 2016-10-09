@@ -3,7 +3,7 @@ from django.conf import settings
 from game.data_mgmt import Data_mgmt
 
 def title_screen(request):
-    context = {}
+    context = {"controls": {"a": {"action": "worldmap", "value": "default_settings"}, "b": {"action": "options/load_game", "value": "load"} } }
     dat = Data_mgmt()
     # dat.load_default_settings()
     # print (dat.get_random_movie()['Title'])
