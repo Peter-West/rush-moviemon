@@ -1,7 +1,11 @@
 from django.shortcuts import render
+from game.data_mgmt import Data_mgmt
 
 def title_screen(request):
     context = {}
+    dat = Data_mgmt()
+    dat.picklize()
+    dat.unpicklize()
     return render(request, "game/title_screen.html", context)
 
 def worldmap(request):
