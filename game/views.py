@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.conf import settings
 from game.data_mgmt import Data_mgmt
+from random import randint
 
 def title_screen(request):
     context = {"controls": {"a": {"action": "worldmap", "value": "default_settings"}, "b": {"action": "options/load_game", "value": "load"} } }
@@ -11,9 +12,12 @@ def title_screen(request):
 def worldmap(request):
     data_mgmt = Data_mgmt()
     data = data_mgmt.dump()
+    chance = randint(0,3)
     board_size = { "width": range(settings.BOARD_SIZE["width"]), "height": range(settings.BOARD_SIZE["height"]) }
     if request.method == 'POST' and request._get_post()['clicked']:
         val = request._get_post()['val']
+        if chance == 1:
+            data["nbr_balls"] += 1
         if val == "left":
             data['position']['x'] = data['position']['x'] - 1
         if val == "up":
@@ -26,9 +30,11 @@ def worldmap(request):
             data_mgmt.load_default_settings()
 
         data_mgmt.load(data["position"], data["nbr_balls"], data["Moviedex"])
-    def attack_link(part):
-        # mov = random.choice
-        return ""
+    def attack_link():
+        if chance == 2:
+            return "battle/tt0111161"
+        else:
+            return ""
     position = data["position"]
     if position["x"] != 0:
         left = {"action": "worldmap", "value": "left"}
@@ -51,9 +57,9 @@ def worldmap(request):
             "up": up,
             "right": right,
             "down": down,
-            "a": {"action": attack_link("action"), "value": attack_link("moviemon_id")},
-            "start": {"action": "options", "value": "options"},
-            "select": {"action": "moviedex", "value": "moviedex"},
+            "a": {"action": attack_link(), "value": attack_link()},
+            "start": {"action": "/options", "value": "options"},
+            "select": {"action": "/moviedex", "value": "moviedex"},
             }
     context = { "board_size": board_size, "controls": controls, "position": position }
     return render(request, "game/worldmap.html", context)
@@ -89,6 +95,7 @@ def battle_moviemon(request, moviemon_id):
             "right": {"action": "", "value": ""},
             "down": {"action": "", "value": ""},
             "a": launch,
+            "b": {"action": "/worldmap", "value": "worldmap"},
             "start": {"action": "", "value": ""},
             "select": {"action": "/moviedex", "value": "moviedex"},
             }
@@ -118,7 +125,7 @@ def moviedex_moviemon(request, moviemon_id):
         if elem['imdbID'] == moviemon_id:
             movie = elem
     controls = {
-            "b": {"action": "moviedex", "value": "back"},
+            "b": {"action": "/moviedex", "value": "back"},
             }
     context = {"movie": movie, "controls":controls}
     return render(request, "game/moviedex_moviemon.html", context)
