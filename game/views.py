@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.conf import settings
 from game.data_mgmt import Data_mgmt
 
 def title_screen(request):
@@ -9,7 +10,10 @@ def title_screen(request):
     return render(request, "game/title_screen.html", context)
 
 def worldmap(request):
-    context = {}
+    context = {"board_size": {
+                "width": range(settings.BOARD_SIZE["width"]),
+                "height": range(settings.BOARD_SIZE["height"])
+              }}
     return render(request, "game/worldmap.html", context)
 
 def battle(request):

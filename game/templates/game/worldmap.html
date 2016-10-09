@@ -1,3 +1,14 @@
 {% extends "game/base.html" %}
 {% block content %}
+<table>
+{% for height in board_size.height %}
+<tr>
+{% for width in board_size.width %}
+<td>
+.
+</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
 {% endblock %}
