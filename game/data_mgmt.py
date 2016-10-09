@@ -23,3 +23,23 @@ class Data_mgmt:
 		for item in obj:
 			print(item['Title'])
 		f.close()
+
+# {Data management} (class)
+# 	[ ] ’load’ :					Charge les données de jeu passés en paramètres dans l’instance
+# 									de classe.
+# 									Retourne l’instance courante.
+
+# 	[ ] ’dump’ :					Retourne les données de jeu.
+
+# 	[ ] ’get_random_movie’ :		Retourne un Moviemon au hasard parmis les Moviemons
+# 									non capturés.
+
+# 	[ ] ’load_default_settings’ :	Charge les données de jeu dans l’instance de classe depuis
+# 									les settings. Requête et stocke les détails de tous les
+# 									Moviemons sur IMDB. Retourne l’instance courante.
+
+# 	[ ] ’get_strength’ :			Retourne la force du joueur.
+
+# 	[ ] ’get_movie’ :				Retourne un dictionnaire Python contenant tous les détails
+# 									depuis le nom du Moviemon passé en paramètre et nécessaires à
+# 									la page Detail
