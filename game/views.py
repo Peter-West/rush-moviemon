@@ -101,7 +101,13 @@ def moviedex(request):
     data = datamg.dump()
     movies = data['Movies']
     print (type(movies))
-    context = {"movies":movies}
+    controls = {
+            "left": {"action": "moviedex", "value": "prev"},
+            "right": {"action": "moviedex", "value": "next"},
+            "a": {"action": "moviedex_moviemon", "value": "detail"},
+            "select": {"action": "worldmap", "value": "back"},
+            }
+    context = {"movies":movies, "controls":controls}
     return render(request, "game/moviedex.html", context)
 
 def moviedex_moviemon(request, moviemon_id):
@@ -111,7 +117,10 @@ def moviedex_moviemon(request, moviemon_id):
     for elem in movies:
         if elem['imdbID'] == moviemon_id:
             movie = elem
-    context = {"movie": movie}
+    controls = {
+            "b": {"action": "moviedex", "value": "back"},
+            }
+    context = {"movie": movie, "controls":controls}
     return render(request, "game/moviedex_moviemon.html", context)
 
 def options(request):
