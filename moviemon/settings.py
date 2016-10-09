@@ -75,10 +75,10 @@ WSGI_APPLICATION = 'moviemon.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
 }
 
 
@@ -119,3 +119,32 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 'game' app settings
+
+BOARD_SIZE = {"width": 10, "height": 10}
+
+PLAYER_START = {"x": 0, "y": 0}
+
+# Films
+
+MOVIES = ["The Shawshank Redemption",
+"The Godfather",
+"The Godfather: Part II",
+"The Dark Knight",
+"12 Angry Men",
+"Schindler\'s List",
+"Pulp Fiction",
+"The Lord of the Rings: The Return of the King",
+"The Good, the Bad and the Ugly",
+"Fight Club",
+"Code Name: K.O.Z.",
+"Saving Christmas",
+"Superbabies: Baby Geniuses 2",
+"Daniel der Zauberer",
+"Manos: The Hands of Fate",
+"Pledge This!",
+"Turks in Space",
+"Birdemic: Shock and Terror",
+"Titanic: The Legend Goes On...",
+"Dream.net"]
