@@ -1,15 +1,18 @@
 {% extends "game/base.html" %}
 {% block content %}
 <table>
-{% for height in board_size.height %}
+{% for y in board_size.height %}
 <tr>
-{% for width in board_size.width %}
+{% for x in board_size.width %}
 <td>
+{% if position.y == y and position.x == x %}
+X
+{% else %}
 .
+{% endif %}
 </td>
 {% endfor %}
 </tr>
 {% endfor %}
 </table>
-{% include "game/controls.html" %}
 {% endblock %}
