@@ -12,10 +12,38 @@ def title_screen(request):
     return render(request, "game/title_screen.html", context)
 
 def worldmap(request):
-    context = {"board_size": {
-                "width": range(settings.BOARD_SIZE["width"]),
-                "height": range(settings.BOARD_SIZE["height"])
-              }}
+    #data = Data_mgmt().load_default_settings()
+    data = {"position": {"x": 9, "y": 9}}
+    def attack_link(part):
+        return ""
+    position = data["position"]
+    board_size = { "width": range(settings.BOARD_SIZE["width"]), "height": range(settings.BOARD_SIZE["height"]) }
+    if position["x"] != 0:
+        left = {"action": "worldmap", "value": "left"}
+    else:
+        left = {"action": "", "value": ""}
+    if position["y"] != 0:
+        up = {"action": "worldmap", "value": "up"}
+    else:
+        up = {"action": "", "value": ""}
+    if position["x"] != int(settings.BOARD_SIZE["height"]) - 1:
+        right = {"action": "worldmap", "value": "right"}
+    else:
+        right = {"action": "", "value": ""}
+    if position["y"] != int(settings.BOARD_SIZE["height"]) - 1:
+        down = {"action": "worldmap", "value": "down"}
+    else:
+        down = {"action": "", "value": ""}
+    controls = {
+            "left": left,
+            "up": up,
+            "right": right,
+            "down": down,
+            "a": {"action": attack_link("action"), "value": attack_link("moviemon_id")},
+            "start": {"action": "options", "value": "options"},
+            "select": {"action": "moviedex", "value": "moviedex"},
+            }
+    context = { "board_size": board_size, "controls": controls, "position": position }
     return render(request, "game/worldmap.html", context)
 
 def battle(request):

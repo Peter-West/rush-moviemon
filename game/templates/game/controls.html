@@ -22,13 +22,6 @@
             </form>
         </li>
         <li>
-            <form action="{{ controls.right.action|default:"" }}" method="POST">
-                {% csrf_token %}
-                <input type="hidden" value="{{ controls.right.value|default:"" }}" name="val">
-                <input type="submit" value="RIGHT" {% if not controls.right.value %}disabled{% endif %} name="clicked">
-            </form>
-        </li>
-        <li>
             <form action="{{ controls.down.action|default:"" }}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" value="{{ controls.down.value|default:"" }}" name="val">
