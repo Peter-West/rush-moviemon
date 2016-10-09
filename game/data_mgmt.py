@@ -2,44 +2,59 @@ from django.conf import settings
 import requests
 import json
 import pickle
+import random
 
 class Data_mgmt:
 
-	def getMovies(self):
-		l = []
+	def get_strength(self):
+		return len(self.dump()['Moviedex'])
+
+	def load_default_settings(self):
+		moviedex = []
+		position = settings.PLAYER_START
+		nbr_balls = 3
 		for name in settings.MOVIES:
 			response = requests.get("http://www.omdbapi.com/?t=" + name + "&plot=short&r=json")
-			l.append(json.loads(response.text))
-		return l
+			movielist.append(json.loads(response.text))
+		self.dic = {"position": position, "nbr_balls": nbr_balls, "Moviedex": moviedex, "Movies": movielist}
+		picklize()
+		return self
+
+	def load(self, pos, balls, dex)
+		movielist = self.dump['Movies']
+		moviedex.append(dex)
+		position = pos
+		nbr_balls = balls
+		self.dic = {"position": position, "nbr_balls": nbr_balls, "Moviedex": moviedex, "Movies": movielist}
+		picklize()
+		return self
+
+	def dump(self):
+		obj = unpicklize()
+		return (obj)
+
+	def get_random_movie(self):
+		obj = self.dump()
+		mv = obj['Movies']
+		dex = obj['Moviedex']
+		while len(dex) < len(mv):
+			var = random.choice(mv)
+			if dex.find(var['Title']) == -1:
+				return var
+
+	def get_movie(self, name):
+		obj = self.dump()['Movies']
+		for item in obj:
+			if item['Title'] == name:
+				return item
 
 	def picklize(self):
 		f = open("data_pickled", "wb")
-		pickle.dump(self.getMovies(), f)
+		pickle.dump(self.dic, f)
 		f.close()
 
 	def unpicklize(self):
 		f = open("data_pickled", "rb")
 		obj = pickle.load(f)
-		for item in obj:
-			print(item['Title'])
 		f.close()
-
-# {Data management} (class)
-# 	[ ] ’load’ :					Charge les données de jeu passés en paramètres dans l’instance
-# 									de classe.
-# 									Retourne l’instance courante.
-
-# 	[ ] ’dump’ :					Retourne les données de jeu.
-
-# 	[ ] ’get_random_movie’ :		Retourne un Moviemon au hasard parmis les Moviemons
-# 									non capturés.
-
-# 	[ ] ’load_default_settings’ :	Charge les données de jeu dans l’instance de classe depuis
-# 									les settings. Requête et stocke les détails de tous les
-# 									Moviemons sur IMDB. Retourne l’instance courante.
-
-# 	[ ] ’get_strength’ :			Retourne la force du joueur.
-
-# 	[ ] ’get_movie’ :				Retourne un dictionnaire Python contenant tous les détails
-# 									depuis le nom du Moviemon passé en paramètre et nécessaires à
-# 									la page Detail
+		return obj
