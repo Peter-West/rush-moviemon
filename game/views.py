@@ -61,12 +61,25 @@ def battle_moviemon(request, moviemon_id):
     return render(request, "game/battle_moviemon.html", context)
 
 def moviedex(request):
+    count = 1
+    def increment(count):
+        count += 1
+        return count
+    def decrement(count):
+        count -= 1
+        return count
     datamg = Data_mgmt()
     # datamg.load_default_settings()
     data = datamg.dump()
     movies = data['Movies']
     print (type(movies))
-    context = {"movies":movies}
+    controls = {
+            "left": {"action": "moviedex", "value": decrement(count)},
+            "right": {"action": "moviedex", "value": increment(count)},
+            "a": {"action": "moviedex_moviemon", "value": "detail"},
+            "select": {"action": "worldmap", "value": "back"},
+            }
+    context = {"movies":movies, "controls":controls, "count":count}
     return render(request, "game/moviedex.html", context)
 
 def moviedex_moviemon(request, moviemon_id):
@@ -76,6 +89,9 @@ def moviedex_moviemon(request, moviemon_id):
     for elem in movies:
         if elem['imdbID'] == moviemon_id:
             movie = elem
+    controls = {
+            "b": {"action": "moviedex", "value": "back"},
+            }
     context = {"movie": movie}
     return render(request, "game/moviedex_moviemon.html", context)
 

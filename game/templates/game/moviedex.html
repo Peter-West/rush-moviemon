@@ -1,11 +1,8 @@
 {% extends "game/base.html" %}
 {% block content %}
-	{% for movie in movies%}
-<div class="moviedex">
-			<a href="{{movie.imdbID}}">
-				{{movie.Title}}<br>
-				<img src="{{movie.Poster}}"><br>
-			</a>
-</div>	
+{% for movie in movies%}
+	<a href="moviedex/{{movie.imdbID}}">
+		<img src="{{movie.Poster}}" {% if count == forloop.counter %} class="moviedex"{% endif %}>
+	</a>
 	{% endfor %}
 {% endblock %}
