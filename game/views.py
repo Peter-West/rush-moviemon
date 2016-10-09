@@ -14,6 +14,12 @@ def worldmap(request):
     board_size = { "width": range(settings.BOARD_SIZE["width"]), "height": range(settings.BOARD_SIZE["height"]) }
     if request.method == 'POST' and request._get_post()['clicked']:
         val = request._get_post()['val']
+        if val == "left":
+            data['position']['x'] = data['position']['x'] - 1
+        if val == "up":
+            data['position']['y'] = data['position']['y'] - 1
+        if val == "right":
+            data['position']['x'] = data['position']['x'] + 1
         if val == "down":
             data['position']['y'] = data['position']['y'] + 1
         data_mgmt.load()
@@ -55,6 +61,11 @@ def battle(request):
 def battle_moviemon(request, moviemon_id):
     dat = Data_mgmt()
     dump = dat.dump()
+    if request.method == 'POST' and request._get_post()['clicked']:
+        val = request._get_post()['val']
+        if val == "throw":
+            dump['nbr_balls'] = dump['nbr_balls'] - 1
+            dat.load(dump["position"], dump["nbr_balls"], dump["Moviedex"])
     mov = {}
     balls = dump["nbr_balls"]
     sgt = dat.get_strength()
@@ -62,16 +73,20 @@ def battle_moviemon(request, moviemon_id):
         if item['imdbID'] == moviemon_id:
             mov = item
     taux = 50 - (int(mov['imdbRating'][0:1]) * 10) + (sgt * 5)
-    # taux = 1 <= taux <= 90
+    taux = 1 <= taux <= 90
     taux = 60
+    if int(balls) > 0:
+        launch = {"action": "/battle/"+moviemon_id, "value":"throw"}
+    else:
+        launch = {"action": "", "value": ""}
     controls = {
             "left": {"action": "", "value": ""},
             "up": {"action": "", "value": ""},
             "right": {"action": "", "value": ""},
             "down": {"action": "", "value": ""},
-            "a": {"action": ("action"), "value": ("moviemon_id")},
-            "start": {"action": "options", "value": "options"},
-            "select": {"action": "moviedex", "value": "moviedex"},
+            "a": launch,
+            "start": {"action": "", "value": ""},
+            "select": {"action": "/moviedex", "value": "moviedex"},
             }
     context = {"moviemon": mov, "nbr_balls" : balls, "strength" : sgt, "taux" : taux, "controls": controls}
     return render(request, "game/battle_moviemon.html", context)
