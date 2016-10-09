@@ -57,7 +57,18 @@ def battle_moviemon(request, moviemon_id):
         if item['imdbID'] == moviemon_id:
             mov = item
     taux = 50 - (int(mov['imdbRating'][0:1]) * 10) + (sgt * 5)
-    context = {"moviemon": mov, "nbr_balls" : balls, "strength" : sgt, "taux" : taux}
+    # taux = 1 <= taux <= 90
+    taux = 60
+    controls = {
+            "left": {"action": "", "value": ""},
+            "up": {"action": "", "value": ""},
+            "right": {"action": "", "value": ""},
+            "down": {"action": "", "value": ""},
+            "a": {"action": ("action"), "value": ("moviemon_id")},
+            "start": {"action": "options", "value": "options"},
+            "select": {"action": "moviedex", "value": "moviedex"},
+            }
+    context = {"moviemon": mov, "nbr_balls" : balls, "strength" : sgt, "taux" : taux, "controls": controls}
     return render(request, "game/battle_moviemon.html", context)
 
 def moviedex(request):
