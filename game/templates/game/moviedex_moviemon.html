@@ -1,4 +1,10 @@
 {% extends "game/base.html" %}
 {% block content %}
-moviemon_id = {{ moviemon_id }}
+
+<img src="{{movie.Poster}}">
+<h1>{{movie.Title}}</h1>
+<h2>Director : {{movie.Director}}</h2>
+<h4>Imdb rating : {{movie.imdbRating}}</h4>
+
+{{movie.Plot}}
 {% endblock %}

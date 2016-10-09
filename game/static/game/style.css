@@ -26,3 +26,11 @@ td {
   display: inline-block;
   margin: 0 1em;
 }
+
+.moviedex {
+  border: 1px solid black;
+  border-collapse: collapse;
+  vertical-align: bottom;
+  padding: 1.5em;
+  text-align: center;
+}

@@ -27,11 +27,22 @@ def battle_moviemon(request, moviemon_id):
     return render(request, "game/battle_moviemon.html", context)
 
 def moviedex(request):
-    context = {}
+    datamg = Data_mgmt()
+    # datamg.load_default_settings()
+    data = datamg.dump()
+    movies = data['Movies']
+    print (type(movies))
+    context = {"movies":movies}
     return render(request, "game/moviedex.html", context)
 
 def moviedex_moviemon(request, moviemon_id):
-    context = {"moviemon_id": moviemon_id}
+    datamg = Data_mgmt()
+    data = datamg.dump()
+    movies = data['Movies']
+    for elem in movies:
+        if elem['imdbID'] == moviemon_id:
+            movie = elem
+    context = {"movie": movie}
     return render(request, "game/moviedex_moviemon.html", context)
 
 def options(request):
