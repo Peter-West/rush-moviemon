@@ -14,9 +14,15 @@ def worldmap(request):
     board_size = { "width": range(settings.BOARD_SIZE["width"]), "height": range(settings.BOARD_SIZE["height"]) }
     if request.method == 'POST' and request._get_post()['clicked']:
         val = request._get_post()['val']
-        if val == "down":
+        if val == "left":
+            data['position']['x'] = data['position']['x'] - 1
+        if val == "up":
+            data['position']['y'] = data['position']['y'] - 1
+        if val == "right":
             data['position']['x'] = data['position']['x'] + 1
-        Data_mgmt.load()
+        if val == "down":
+            data['position']['y'] = data['position']['y'] + 1
+        data_mgmt.load()
     def attack_link(part):
         return ""
     position = data["position"]
