@@ -22,8 +22,12 @@ def worldmap(request):
             data['position']['x'] = data['position']['x'] + 1
         if val == "down":
             data['position']['y'] = data['position']['y'] + 1
-        data_mgmt.load()
+        if val == "default_settings":
+            data_mgmt.load_default_settings()
+
+        data_mgmt.load(data["position"], data["nbr_balls"], data["Moviedex"])
     def attack_link(part):
+        # mov = random.choice
         return ""
     position = data["position"]
     if position["x"] != 0:

@@ -19,7 +19,6 @@ class Data_mgmt:
 			self.movielist.append(json.loads(response.text))
 		self.dic = {"position": self.position, "nbr_balls": self.nbr_balls, "Moviedex": self.moviedex, "Movies": self.movielist}
 		self.picklize()
-		return self
 
 	def load(self, pos, balls, dex):
 		self.movielist = self.dump()['Movies']
