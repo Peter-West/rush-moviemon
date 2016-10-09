@@ -5,8 +5,10 @@ from game.data_mgmt import Data_mgmt
 def title_screen(request):
     context = {}
     dat = Data_mgmt()
-    dat.picklize()
-    dat.unpicklize()
+    dat.load_default_settings()
+    print (dat.get_random_movie()['Title'])
+    # dump = dat.dump()
+    # print (dump['Movies'])
     return render(request, "game/title_screen.html", context)
 
 def worldmap(request):

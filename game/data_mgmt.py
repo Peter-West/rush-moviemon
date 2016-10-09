@@ -11,26 +11,27 @@ class Data_mgmt:
 
 	def load_default_settings(self):
 		moviedex = []
+		movielist = []
 		position = settings.PLAYER_START
 		nbr_balls = 3
 		for name in settings.MOVIES:
 			response = requests.get("http://www.omdbapi.com/?t=" + name + "&plot=short&r=json")
 			movielist.append(json.loads(response.text))
 		self.dic = {"position": position, "nbr_balls": nbr_balls, "Moviedex": moviedex, "Movies": movielist}
-		picklize()
+		self.picklize()
 		return self
 
-	def load(self, pos, balls, dex)
+	def load(self, pos, balls, dex):
 		movielist = self.dump['Movies']
 		moviedex.append(dex)
 		position = pos
 		nbr_balls = balls
 		self.dic = {"position": position, "nbr_balls": nbr_balls, "Moviedex": moviedex, "Movies": movielist}
-		picklize()
+		self.picklize()
 		return self
 
 	def dump(self):
-		obj = unpicklize()
+		obj = self.unpicklize()
 		return (obj)
 
 	def get_random_movie(self):
@@ -39,8 +40,14 @@ class Data_mgmt:
 		dex = obj['Moviedex']
 		while len(dex) < len(mv):
 			var = random.choice(mv)
-			if dex.find(var['Title']) == -1:
+			# start methode sale
+			count = 0
+			for i in dex:
+				if dex[i]['Title'] == var['Title']:
+					count += 1
+			if count == 0:
 				return var
+			# end methode sale
 
 	def get_movie(self, name):
 		obj = self.dump()['Movies']

@@ -1,0 +1,43 @@
+<div>
+    <ul id="controls">
+        <li>
+            <form action="{{ controls.left.action }}" method="POST">
+                <input type="submit" value="{{ controls.left.value|default:"" }}" name="clicked">LEFT</input>
+            </form>
+        </li>
+        <li>
+            <form action="{{ controls.up.action }}" method="POST">
+                <input type="submit" value="{{ controls.up.value|default:"" }}" name="clicked">UP</input>
+            </form>
+        </li>
+        <li>
+            <form action="{{ controls.right.action }}" method="POST">
+                <input type="submit" value="{{ controls.right.value|default:"" }}" name="clicked">RIGHT</input>
+            </form>
+        </li>
+        <li>
+            <form action="{{ controls.down.action }}" method="POST">
+                <input type="submit" value="{{ controls.down.value|default:"" }}" name="clicked">DOWN</input>
+            </form>
+        </li>
+        <li>
+            <form action="{{ controls.select.action }}" method="POST">
+                <input type="submit" value="{{ controls.select.value|default:"" }}" name="clicked">SELECT</input>
+            </form>
+        <li>
+            <form action="{{ controls.start.action }}" method="POST">
+                <input type="submit" value="{{ controls.start.value|default:"" }}" name="clicked">START</input>
+            </form>
+        </li>
+        <li>
+            <form action="{{ controls.a.action }}" method="POST">
+                <input type="submit" value="{{ controls.a.value|default:"" }}" name="clicked">A</input>
+            </form>
+        </li>
+        <li>
+            <form action="{{ controls.b.action }}" method="POST">
+                <input type="submit" value="{{ controls.b.value|default:"" }}" name="clicked">B</input>
+            </form>
+        </li>
+    </ul>
+</div>
