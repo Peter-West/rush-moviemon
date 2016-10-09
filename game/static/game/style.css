@@ -1,0 +1,16 @@
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+tr {
+  border-collapse: collapse;
+
+}
+
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  vertical-align: bottom;
+  padding: 1.5em;
+}
